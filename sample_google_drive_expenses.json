@@ -1,0 +1,63 @@
+{
+  "title": "Monthly Household & Personal Expenses",
+  "currency": "$",
+  "lastUpdated": "2026-11-11T10:00:00Z",
+  "items": [
+    {
+      "id": "exp-001",
+      "name": "Apartment Rent",
+      "cost": 750.00,
+      "checked": true,
+      "category": "Housing"
+    },
+    {
+      "id": "exp-002",
+      "name": "Electric Utility Bill",
+      "cost": 85.50,
+      "checked": true,
+      "category": "Utilities"
+    },
+    {
+      "id": "exp-003",
+      "name": "High-speed Internet & WiFi",
+      "cost": 50.00,
+      "checked": false,
+      "category": "Utilities"
+    },
+    {
+      "id": "exp-004",
+      "name": "Supermarket Groceries (Week 1)",
+      "cost": 125.75,
+      "checked": true,
+      "category": "Groceries"
+    },
+    {
+      "id": "exp-005",
+      "name": "Supermarket Groceries (Week 2)",
+      "cost": 110.20,
+      "checked": false,
+      "category": "Groceries"
+    },
+    {
+      "id": "exp-006",
+      "name": "Public Transit / Gasoline",
+      "cost": 65.00,
+      "checked": false,
+      "category": "Transportation"
+    },
+    {
+      "id": "exp-007",
+      "name": "Health Insurance Premium",
+      "cost": 140.00,
+      "checked": true,
+      "category": "Health"
+    },
+    {
+      "id": "exp-008",
+      "name": "Streaming & Entertainment Subs",
+      "cost": 29.99,
+      "checked": false,
+      "category": "Entertainment"
+    }
+  ]
+}

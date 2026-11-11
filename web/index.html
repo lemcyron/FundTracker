@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FundTracker - Android Expenses Checklist</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="mobile-frame">
+    <!-- Android Status Bar Simulation -->
+    <div class="android-status-bar">
+      <span>10:30</span>
+      <div class="status-icons">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L12 22l7.03-4.39C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9z"/></svg>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
+      </div>
+    </div>
+
+    <!-- Green Top App Bar -->
+    <header class="app-header">
+      <div class="header-titles">
+        <h1 class="app-title">FundTracker</h1>
+        <p class="app-subtitle">Expenses Checklist Tracker</p>
+      </div>
+      <div class="header-actions">
+        <button id="btnQuickSync" class="icon-btn" title="Sync from Google Drive">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0020 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 004 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+        </button>
+        <button id="btnOpenSettings" class="icon-btn" title="Settings & Menu">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <button class="filter-chip active" data-filter="all">All (<span id="countAll">0</span>)</button>
+      <button class="filter-chip" data-filter="checked">Checked (<span id="countChecked">0</span>)</button>
+      <button class="filter-chip" data-filter="unchecked">Unchecked (<span id="countUnchecked">0</span>)</button>
+    </div>
+
+    <!-- Expense Checklist Container -->
+    <main class="expense-list-container">
+      <div id="expenseList" class="expense-list">
+        <!-- Dynamic Expense Items Injected Here -->
+      </div>
+      <div id="emptyState" class="empty-state hidden">
+        <div class="empty-icon-circle">
+          <svg viewBox="0 0 24 24" width="36" height="36" fill="#2E7D32"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+        </div>
+        <h3>No Expense Items</h3>
+        <p>Tap '+ Add Item' or sync your Google Drive JSON.</p>
+      </div>
+    </main>
+
+    <!-- Floating Action Button -->
+    <button id="btnOpenAddModal" class="fab-btn">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      <span>Add Item</span>
+    </button>
+
+    <!-- Green Bottom Summary Bar -->
+    <footer class="bottom-summary-bar">
+      <!-- Top Row: Grand Total of all amounts -->
+      <div class="summary-top-row">
+        <div class="summary-main-info">
+          <div class="summary-icon-box">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          </div>
+          <div>
+            <div class="summary-label">TOTAL AMOUNT</div>
+            <div id="totalAllAmount" class="summary-value-large">$0.00</div>
+          </div>
+        </div>
+        <div id="progressBadge" class="progress-badge">0% Done</div>
+      </div>
+
+      <!-- Linear Progress Bar -->
+      <div class="progress-track">
+        <div id="progressBar" class="progress-fill" style="width: 0%;"></div>
+      </div>
+
+      <!-- Bottom Row: Split Checked vs Unchecked -->
+      <div class="summary-split-row">
+        <div class="split-card">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="#81C784"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          <div class="split-card-content">
+            <div class="split-label">CHECKED (<span id="checkedCountBadge">0</span>)</div>
+            <div id="totalCheckedAmount" class="split-value">$0.00</div>
+          </div>
+        </div>
+        <div class="split-card">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="#FFB74D"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+          <div class="split-card-content">
+            <div class="split-label">UNCHECKED (<span id="uncheckedCountBadge">0</span>)</div>
+            <div id="totalUncheckedAmount" class="split-value">$0.00</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ADD ITEM MODAL -->
+    <div id="addModal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <h2 class="modal-title">Add Expense Item</h2>
+        <form id="addExpenseForm">
+          <div class="form-group">
+            <label for="inputItemName">Item Name / Description *</label>
+            <input type="text" id="inputItemName" placeholder="e.g. Electric Bill, Groceries" required>
+          </div>
+          <div class="form-group">
+            <label for="inputItemCost">Cost / Amount (<span class="currency-symbol">$</span>) *</label>
+            <input type="number" id="inputItemCost" placeholder="0.00" step="0.01" min="0" required>
+          </div>
+          <div class="form-group">
+            <label for="inputItemCategory">Category (Optional)</label>
+            <input type="text" id="inputItemCategory" placeholder="e.g. Groceries, Utilities, Bills">
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-secondary" id="btnCancelAdd">Cancel</button>
+            <button type="submit" class="btn-primary">Add Item</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- EDIT ITEM MODAL -->
+    <div id="editModal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <h2 class="modal-title">Edit Expense Item</h2>
+        <form id="editExpenseForm">
+          <input type="hidden" id="editItemId">
+          <div class="form-group">
+            <label for="editItemName">Item Name *</label>
+            <input type="text" id="editItemName" required>
+          </div>
+          <div class="form-group">
+            <label for="editItemCost">Cost (<span class="currency-symbol">$</span>) *</label>
+            <input type="number" id="editItemCost" step="0.01" min="0" required>
+          </div>
+          <div class="form-group">
+            <label for="editItemCategory">Category</label>
+            <input type="text" id="editItemCategory">
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-secondary" id="btnCancelEdit">Cancel</button>
+            <button type="submit" class="btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- SETTINGS & GOOGLE DRIVE MODAL -->
+    <div id="settingsModal" class="modal-overlay hidden">
+      <div class="modal-card modal-scrollable">
+        <div class="modal-header-row">
+          <div class="modal-title-with-icon">
+            <div class="icon-circle-sm">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="#2E7D32"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+            </div>
+            <h2 class="modal-title">Settings & Menu</h2>
+          </div>
+          <button type="button" class="modal-close-btn" id="btnCloseSettings">&times;</button>
+        </div>
+
+        <!-- Section 1: Checklist Actions (Check All / Uncheck All) -->
+        <div class="settings-section">
+          <div class="section-title">CHECKLIST ACTIONS</div>
+          <div class="actions-grid">
+            <button id="btnCheckAll" class="btn-primary">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18 7l-1.41-1.41-6.34 6.34 1.41 1.41L18 7zm4.24-1.41L11.66 16.17 7.41 11.93l-1.41 1.41 5.66 5.66 12-12-1.42-1.41zM.41 13.41L6.07 19.07l1.41-1.41L1.83 12 .41 13.41z"/></svg>
+              <span>Check All Items</span>
+            </button>
+            <button id="btnUncheckAll" class="btn-outline">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+              <span>Uncheck All Items</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Section 2: Google Drive JSON Sync -->
+        <div class="settings-section">
+          <div class="section-title">GOOGLE DRIVE JSON SYNC</div>
+          <p class="section-desc">Connect to a Google Drive JSON file to load and track expenses dynamically.</p>
+          
+          <div class="form-group">
+            <label for="inputDriveUrl">Google Drive File Link or File ID</label>
+            <input type="text" id="inputDriveUrl" placeholder="https://drive.google.com/file/d/YOUR_FILE_ID/view?usp=sharing">
+          </div>
+
+          <button id="btnSyncNow" class="btn-primary full-width">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+            <span id="syncBtnText">Sync From Google Drive Now</span>
+          </button>
+
+          <div class="tip-box">
+            <strong>How to share Google Drive JSON:</strong>
+            <ol>
+              <li>Upload your <code>expenses.json</code> to Google Drive.</li>
+              <li>Right-click > <strong>Share</strong> > General access: <strong>Anyone with the link (Viewer)</strong>.</li>
+              <li>Paste the link above and click <strong>Sync</strong>!</li>
+            </ol>
+          </div>
+
+          <button id="btnCopyJson" class="btn-outline full-width">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            <span>Copy Current Checklist as JSON</span>
+          </button>
+        </div>
+
+        <!-- Section 3: Currency Selector -->
+        <div class="settings-section">
+          <div class="section-title">CURRENCY SYMBOL</div>
+          <div class="currency-chips" id="currencyChips">
+            <button class="chip active" data-cur="$">$ USD</button>
+            <button class="chip" data-cur="₱">₱ PHP</button>
+            <button class="chip" data-cur="€">€ EUR</button>
+            <button class="chip" data-cur="£">£ GBP</button>
+            <button class="chip" data-cur="¥">¥ JPY</button>
+            <button class="chip" data-cur="₹">₹ INR</button>
+          </div>
+        </div>
+
+        <!-- Section 4: Reset -->
+        <div class="settings-section">
+          <button id="btnClearAll" class="btn-danger full-width">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            <span>Clear All Items</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

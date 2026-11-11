@@ -1,0 +1,13 @@
+{
+  "name": "fundtracker-expenses",
+  "version": "1.0.0",
+  "description": "Android APK Expenses Checklist Tracker with Green Theme & Google Drive Sync",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test.js"
+  },
+  "keywords": ["android", "expenses", "checklist", "tracker", "google-drive"],
+  "author": "FundTracker",
+  "license": "MIT"
+}

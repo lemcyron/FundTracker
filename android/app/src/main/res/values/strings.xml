@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FundTracker</string>
+    <string name="app_subtitle">Expenses Checklist Tracker</string>
+</resources>
